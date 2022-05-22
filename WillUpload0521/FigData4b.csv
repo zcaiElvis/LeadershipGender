@@ -1,0 +1,51 @@
+SCHOOL,GENDER,count
+Boston U,F,76
+Boston U,M,65
+Columbia,F,92
+Columbia,M,58
+Cornell,F,64
+Cornell,M,74
+Duke,F,81
+Duke,M,75
+Emory,F,62
+Emory,M,42
+Harvard,F,68
+Harvard,M,80
+Johns H,F,62
+Johns H,M,58
+MIT,F,13
+MIT,M,13
+McMaster,F,24
+McMaster,M,26
+NWestern,F,41
+NWestern,M,53
+Stanford,F,51
+Stanford,M,34
+UBC,F,57
+UBC,M,57
+UCLA,F,73
+UCLA,M,68
+UCSD,F,23
+UCSD,M,24
+UCSF,F,24
+UCSF,M,17
+UChicago,F,66
+UChicago,M,58
+UMichigan,F,57
+UMichigan,M,72
+UNC,F,73
+UNC,M,58
+UPenn,F,50
+UPenn,M,46
+UPitt,F,46
+UPitt,M,47
+UToronto,F,40
+UToronto,M,44
+UW,F,70
+UW,M,68
+Vanderbilt,F,48
+Vanderbilt,M,54
+WUStL,F,43
+WUStL,M,28
+Yale,F,79
+Yale,M,68
