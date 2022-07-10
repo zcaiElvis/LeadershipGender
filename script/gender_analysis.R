@@ -3,6 +3,8 @@ library(tidyverse)
 library(hrbrthemes)
 library(brms)
 library(lme4)
+library(lmtest)
+library(sandwich)
 source("function/marascuillo.R")
 
 
@@ -26,6 +28,7 @@ tier_long$mid <- c(0,0,0,1,1,1,0,0)
 tier_long$high<- c(1,1,1,0,0,0,0,0)
 
 tier_long$rank <- c(1,1,1,2,2,2,3,3)
+tier_long$study <- c(1,1,1,1,1,1,0,0)
 
 
 ### Analysis ###
@@ -36,10 +39,15 @@ fac_prop_test <- prop.test(fac$Female, fac$Total)
 
 # Post-hoc adjusted z-score test
 z_output <- matrix(0, nrow(fac), nrow(fac))
+effective_or_not <- matrix(0, nrow(fac), nrow(fac))
 
 for(i in 1:nrow(fac)){
   for(j in 1:nrow(fac)){
     if(i != j){
+      
+      ss_estimate <- power.prop.test(p1 = fac$Female[i]/fac$Total[i], p2 = fac$Female[j]/fac$Total[j], power=0.8)
+      effective_or_not[i,j] <-fac$Total[i] > ss_estimate$n & fac$Total[j] > ss_estimate$n
+      
       test <- prop.test(c(fac$Female[i], fac$Female[j]), c(fac$Total[i], fac$Total[j]))
       z_output[i,j] = test$p.value
     }
@@ -92,6 +100,18 @@ ggplot(heatmap_df, aes(x = Var1, y = Var2, fill= vals)) +
 
 
 ### Analyzing tiers ###
-fit_tier_me <- glmer(cbind(Female,Total) ~ tier + (1|rank), family=binomial, data=tier_long)
+
+ggplot(tier_long, aes(x=tier, y =Female/Total))+
+  geom_line()
+
+### Mixed effect model, not used anymore 
+# fit_tier_me <- glmer(cbind(Female,Total) ~ tier + (1|rank), family=binomial, data=tier_long)
+
+
+
+### Clustered adjusted regression
+fit_tier_lm <- glm(cbind(Female, Total) ~ tier + study, family=binomial, data=tier_long)
+vcov_tier <- vcovCL(fit_tier_lm, cluster = ~study)
+cluster_adj_coeff_test <- coeftest(fit_tier_lm, vcov=vcov_tier, cluster = ~study)
 
 
