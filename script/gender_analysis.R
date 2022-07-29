@@ -4,7 +4,6 @@ library(hrbrthemes)
 library(brms)
 library(lme4)
 library(sandwich)
-source("function/marascuillo.R")
 
 
 ### Data import ###
@@ -50,7 +49,7 @@ for(i in 1:nrow(fac)){
 # Removing diagonol entries for plotting
 p_unadj_diag_rm <- p_unadj
 diag(p_unadj_diag_rm) = NA
-p_adj <- p.adjust(p_unadj_diag_rm, method="bonferroni")
+p_adj <- p.adjust(p_unadj_diag_rm, method="holm")
 p_adj <- matrix(p_adj, nrow=14, ncol=14)
 p_adj_df <- data.frame(p_adj)
 
