@@ -2,6 +2,12 @@ library(lmtest)
 library(brms)
 library(sandwich)
 
+##############################################
+### Code for: "Organizational leadership 
+### gender differences in medical schools and
+### affiliated universities." 
+##############################################
+
 
 ### Data import ###
 
